@@ -13,7 +13,7 @@ docker-compose
 
 ```
 cp config/.env.example config/.env
-docker-compose up -d
+docker-compose up --build -d
 ```
 
 ### Tests:
