@@ -22,6 +22,13 @@ docker-compose up --build -d
 docker exec -it boilerplate-api pytest
 ```
 
+### Coverage:
+
+```
+docker exec -it boilerplate-api coverage run -m pytest
+docker exec -it boilerplate-api coverage report
+```
+
 ### Docs:
 
 ```
