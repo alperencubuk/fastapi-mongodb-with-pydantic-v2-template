@@ -33,7 +33,7 @@ boilerplate_router = APIRouter(prefix="/boilerplate")
 )
 async def boilerplate_create(
     boilerplate: BoilerplateRequest, db: AsyncIOMotorDatabase = Depends(get_db)
-):
+) -> dict:
     if created_boilerplate := await create_boilerplate(boilerplate=boilerplate, db=db):
         return created_boilerplate
     raise HTTPException(
@@ -54,7 +54,7 @@ async def boilerplate_create(
 async def boilerplate_get(
     request: BoilerplateId = Depends(),
     db: AsyncIOMotorDatabase = Depends(get_db),
-):
+) -> dict:
     if boilerplate := await get_boilerplate(
         boilerplate_id=request.boilerplate_id, db=db
     ):
@@ -79,7 +79,7 @@ async def boilerplate_update(
     payload: BoilerplateUpdateRequest,
     request: BoilerplateId = Depends(),
     db: AsyncIOMotorDatabase = Depends(get_db),
-):
+) -> dict:
     if await get_boilerplate(boilerplate_id=request.boilerplate_id, db=db):
         if updated_boilerplate := await update_boilerplate(
             boilerplate_id=request.boilerplate_id, boilerplate=payload, db=db
@@ -107,7 +107,7 @@ async def boilerplate_update(
 async def boilerplate_delete(
     request: BoilerplateId = Depends(),
     db: AsyncIOMotorDatabase = Depends(get_db),
-):
+) -> None:
     if not await delete_boilerplate(boilerplate_id=request.boilerplate_id, db=db):
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -116,7 +116,7 @@ async def boilerplate_delete(
 
 
 @boilerplate_router.get(
-    "/list/all",
+    "/",
     response_model=BoilerplatePage,
     responses={status.HTTP_401_UNAUTHORIZED: {"model": ExceptionModel}},
     tags=["boilerplate"],
@@ -124,7 +124,7 @@ async def boilerplate_delete(
 async def boilerplate_list(
     pagination: BoilerplatePagination = Depends(),
     db: AsyncIOMotorDatabase = Depends(get_db),
-):
+) -> BoilerplatePage:
     return await list_boilerplate(
         page=pagination.page,
         size=pagination.size,

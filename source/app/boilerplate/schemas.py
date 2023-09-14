@@ -30,9 +30,9 @@ class BoilerplateApiResponse(BoilerplateResponse):
 
 
 class BoilerplateUpdateRequest(BaseModel):
-    email: EmailStr | None
-    first_name: str | None
-    last_name: str | None
+    email: EmailStr | None = None
+    first_name: str | None = None
+    last_name: str | None = None
 
 
 class BoilerplateUpdate(UpdateModel, BoilerplateUpdateRequest):
@@ -46,8 +46,8 @@ class BoilerplatePage(PageModel):
 class BoilerplatePagination(BaseModel):
     page: int = Field(default=1, ge=1)
     size: int = Field(default=50, ge=0)
-    sort: Sort = Sort.ID.value
-    order: Order = Order.ASC.value
+    sort: Sort = Sort.ID
+    order: Order = Order.ASC
 
 
 class BoilerplateId(BaseModel):

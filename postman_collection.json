@@ -147,7 +147,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8000/boilerplate/list/all?page=1&size=50&sort=id&order=desc",
+							"raw": "localhost:8000/boilerplate?page=1&size=50&sort=id&order=desc",
 							"host": [
 								"localhost"
 							],

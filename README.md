@@ -1,4 +1,4 @@
-# FastAPI MongoDB Template
+# FastAPI MongoDB with Pydantic v2 Template
 
 ---
 
@@ -42,7 +42,7 @@ POST   /boilerplate                     # boilerplate create
 GET    /boilerplate/{boilerplate_id}    # boilerplate get
 PATCH  /boilerplate/{boilerplate_id}    # boilerplate update
 DELETE /boilerplate/{boilerplate_id}    # boilerplate delete
-GET    /boilerplate/list/all            # boilerplate list
+GET    /boilerplate                     # boilerplate list
 
 GET    /                                # health check
 ```

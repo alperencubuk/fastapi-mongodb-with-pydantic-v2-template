@@ -1,19 +1,18 @@
 from datetime import datetime
 
-from bson import ObjectId
-from pydantic import BaseModel, Field, root_validator
+from pydantic import BaseModel, Field, model_validator
 
 from source.core.database import PyObjectId
 
 
 class CreateModel(BaseModel):
     create_date: datetime = Field(default_factory=datetime.utcnow)
-    update_date: datetime = None
+    update_date: datetime | None = None
 
-    @root_validator
-    def update_date_validator(cls, values) -> dict:
-        values["update_date"] = values["create_date"]
-        return values
+    @model_validator(mode="after")
+    def update_date_validator(self) -> "CreateModel":
+        self.update_date = self.create_date
+        return self
 
 
 class UpdateModel(BaseModel):
@@ -23,18 +22,12 @@ class UpdateModel(BaseModel):
 class ResponseModel(BaseModel):
     id: PyObjectId = Field(alias="_id")
 
-    class Config:
-        json_encoders = {ObjectId: str}
-
 
 class PageModel(BaseModel):
     page: int
     size: int
     total: int
     pages: int
-
-    class Config:
-        json_encoders = {ObjectId: str}
 
 
 class ExceptionModel(BaseModel):
