@@ -1,6 +1,7 @@
 from math import ceil
 
 from motor.motor_asyncio import AsyncIOMotorDatabase
+from pydantic_mongo import ObjectIdField
 
 from source.app.boilerplate.enums import Order, Sort
 from source.app.boilerplate.schemas import (
@@ -12,11 +13,10 @@ from source.app.boilerplate.schemas import (
     BoilerplateUpdateRequest,
 )
 from source.app.boilerplate.utils import check_email
-from source.core.database import PyObjectId
 
 
 async def get_boilerplate(
-    boilerplate_id: PyObjectId, db: AsyncIOMotorDatabase
+    boilerplate_id: ObjectIdField, db: AsyncIOMotorDatabase
 ) -> dict | None:
     if boilerplate := await db["boilerplate"].find_one({"_id": boilerplate_id}):
         return BoilerplateResponse(**boilerplate).model_dump()
@@ -68,7 +68,7 @@ async def create_boilerplate(
 
 
 async def update_boilerplate(
-    boilerplate_id: PyObjectId,
+    boilerplate_id: ObjectIdField,
     boilerplate: BoilerplateUpdateRequest,
     db: AsyncIOMotorDatabase,
 ) -> dict | None:
@@ -85,7 +85,7 @@ async def update_boilerplate(
 
 
 async def delete_boilerplate(
-    boilerplate_id: PyObjectId, db: AsyncIOMotorDatabase
+    boilerplate_id: ObjectIdField, db: AsyncIOMotorDatabase
 ) -> int:
     delete = await db["boilerplate"].delete_one({"_id": boilerplate_id})
     return delete.deleted_count

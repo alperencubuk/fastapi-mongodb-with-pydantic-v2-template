@@ -1,9 +1,9 @@
 from datetime import datetime
 
 from pydantic import BaseModel, EmailStr, Field
+from pydantic_mongo import ObjectIdField
 
 from source.app.boilerplate.enums import Order, Sort
-from source.core.database import PyObjectId
 from source.core.schemas import CreateModel, PageModel, ResponseModel, UpdateModel
 
 
@@ -26,7 +26,7 @@ class BoilerplateResponse(ResponseModel):
 
 
 class BoilerplateApiResponse(BoilerplateResponse):
-    id: PyObjectId
+    id: str
 
 
 class BoilerplateUpdateRequest(BaseModel):
@@ -51,4 +51,4 @@ class BoilerplatePagination(BaseModel):
 
 
 class BoilerplateId(BaseModel):
-    boilerplate_id: PyObjectId
+    boilerplate_id: ObjectIdField

@@ -1,8 +1,7 @@
 from datetime import datetime
 
 from pydantic import BaseModel, Field, model_validator
-
-from source.core.database import PyObjectId
+from pydantic_mongo import ObjectIdField
 
 
 class CreateModel(BaseModel):
@@ -20,7 +19,7 @@ class UpdateModel(BaseModel):
 
 
 class ResponseModel(BaseModel):
-    id: PyObjectId = Field(alias="_id")
+    id: ObjectIdField = Field(alias="_id")
 
 
 class PageModel(BaseModel):
